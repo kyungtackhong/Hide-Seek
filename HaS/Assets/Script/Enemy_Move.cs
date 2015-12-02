@@ -52,19 +52,19 @@ public class Enemy_Move : MonoBehaviour {
 		enemy.transform.eulerAngles=ang;
 		if (transform.eulerAngles.y >= 270) {
 			type = 3;
-			enemy.transform.localScale=new Vector3(-3,3,3);
+			enemy.transform.localScale=new Vector3(-1.5f,1.5f,3);
 		} 
 		else if (transform.eulerAngles.y >= 180) {
 			type = 2;
-			enemy.transform.localScale=new Vector3(3,3,3);
+			enemy.transform.localScale=new Vector3(1.5f,1.5f,3);
 		} 
 		else if (transform.eulerAngles.y >= 90) {
 			type = 1;
-			enemy.transform.localScale=new Vector3(3,3,3);
+			enemy.transform.localScale=new Vector3(1.5f,1.5f,3);
 		} 
 		else {
 			type = 0;
-			enemy.transform.localScale=new Vector3(3,3,3);
+			enemy.transform.localScale=new Vector3(1.5f,1.5f,3);
 		}
 		if (type == 0) 
 			spr.sprite = upSpr [(sprCount / 10) % 5];

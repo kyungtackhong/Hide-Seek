@@ -181,17 +181,17 @@ public class Player : MonoBehaviour {
 			z = Input.GetAxisRaw ("Vertical");
 			if (x > 0) {
 				spr.sprite = sideSpr [(sprCount / 10) % 5];
-				player.transform.localScale = new Vector3 (3, 3, 3);
+				player.transform.localScale = new Vector3 (1.5f, 1.5f, 3);
 			} else if (x < 0) {
 				spr.sprite = sideSpr [(sprCount / 10) % 5];
-				player.transform.localScale = new Vector3 (-3, 3, 3);
+				player.transform.localScale = new Vector3 (-1.5f, 1.5f, 3);
 			}
 			if (z > 0) {
 				spr.sprite = upSpr [(sprCount / 10) % 5];
-				player.transform.localScale = new Vector3 (3, 3, 3);
+				player.transform.localScale = new Vector3 (1.5f, 1.5f, 3);
 			} else if (z < 0) {
 				spr.sprite = downSpr [(sprCount / 10) % 5];
-				player.transform.localScale = new Vector3 (3, 3, 3);
+				player.transform.localScale = new Vector3 (1.5f, 1.5f, 3);
 			}
 			vec.x = x * Time.deltaTime * velocity * v;
 			vec.z = z * Time.deltaTime * velocity * v;

@@ -1,9 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\dodge_hunting\Assets\Script\Character\Fire\FirePillar.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Enemy_Move.cs">
     <Files>
-      <File FileName="..\dodge_hunting\Assets\Script\Character\Fire\FirePillar.cs" Line="18" Column="3" />
-      <File FileName="..\dodge_hunting\Assets\Script\Character\Fire\Fire.cs" Line="139" Column="31" />
+      <File FileName="Assets\Script\Player.cs" Line="195" Column="5" />
+      <File FileName="Assets\Script\Enemy_Move.cs" Line="71" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
