@@ -16,6 +16,13 @@ public class Player_Warp : MonoBehaviour {
 				this.transform.position = new Vector3(-120,1,175);
 			}
 		}
+		if(Variable.scene==10)
+		{
+			if(Variable.prevScene == 20)
+			{
+				this.transform.position = new Vector3(-120,1,175);
+			}
+		}
 	}
 
 	void OnTriggerEnter(Collider col)
@@ -37,6 +44,12 @@ public class Player_Warp : MonoBehaviour {
 			Application.LoadLevel("Hall2Scene");
 			Variable.prevScene=Variable.scene;
 			Variable.scene = 10;
+		}
+		else if(col.gameObject.tag=="Hall3")
+		{
+			Application.LoadLevel("Hall3Scene");
+			Variable.prevScene=Variable.scene;
+			Variable.scene = 20;
 		}
 	}
 

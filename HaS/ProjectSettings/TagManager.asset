@@ -13,6 +13,7 @@ TagManager:
   - Hall1
   - Hall2
   - Hall3
+  - Hall4
   layers:
   - Default
   - TransparentFX
