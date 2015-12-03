@@ -3927,6 +3927,7 @@ GameObject:
   - 114: {fileID: 1194362989}
   - 135: {fileID: 1194362988}
   - 195: {fileID: 1194362987}
+  - 114: {fileID: 1194362994}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -3980,9 +3981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3af211db2d2641f4cabf623af6a5a3ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldOfViewAngle: 150
-  playerInSight: 0
-  targetPos: {x: 0, y: 0, z: 0}
+  trace: {fileID: 0}
   enemy: {fileID: 599131610}
   spr: {fileID: 599131611}
   upSpr:
@@ -4003,7 +4002,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e336235d4eea65c4b86434b7f62572f0, type: 3}
   - {fileID: 21300000, guid: 1e9d21eb59e0c42459f409337cdce532, type: 3}
   - {fileID: 21300000, guid: db628d35205ac3e4aa532f7f724b9cae, type: 3}
-  player: {fileID: 146606097}
 --- !u!23 &1194362990
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4063,6 +4061,22 @@ Transform:
   - {fileID: 599131612}
   m_Father: {fileID: 0}
   m_RootOrder: 4
+--- !u!114 &1194362994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1194362986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87a4b473e6c6dd84bbd8f789e8f129ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fieldOfViewAngle: 110
+  playerInSight: 0
+  targetPos: {x: 0, y: 0, z: 0}
+  enemy: {fileID: 599131610}
+  player: {fileID: 146606097}
 --- !u!1 &1215043649
 GameObject:
   m_ObjectHideFlags: 0

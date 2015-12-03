@@ -58,7 +58,7 @@ public class Player : MonoBehaviour {
 	
 
 	void Update () {
-		if (save==true) {
+		/*if (save==true) {
 			Debug.Log (" 로드");
 			Load();
 			save=false;
@@ -68,7 +68,7 @@ public class Player : MonoBehaviour {
 			Save ();
 			Application.LoadLevel("save");
 
-		}
+		}*/
 		v = 2; //속도 상수
 		timer++;
 		if (timer % 1200 == 0) { //20초마다 1씩 증가 
