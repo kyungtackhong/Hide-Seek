@@ -41,9 +41,9 @@ public class Player : MonoBehaviour {
 		SaveLoad.info [1] = this.transform.position.x + "";
 		SaveLoad.info [2] = this.transform.position.z + "";
 		SaveLoad.info [3] = this.transform.position.y + "";
-		SaveLoad.info [4] = sleep_desire + "";
-		SaveLoad.info [5] = appetite + "";
-		SaveLoad.info [6] = excretion + "";
+		SaveLoad.info [4] = Variable.sleep_desire + "";
+		SaveLoad.info [5] = Variable.appetite + "";
+		SaveLoad.info [6] = Variable.excretion + "";
 
 	}
 	void Load(){
@@ -55,9 +55,9 @@ public class Player : MonoBehaviour {
 		vec.y = float.Parse (info [3]);
 		this.transform.position = vec;
 		vec.y = 0;
-		sleep_desire = (int)float.Parse (info [4]);
-		appetite = (int)float.Parse (info [5]);
-		excretion = (int)float.Parse (info [6]);
+		Variable.sleep_desire = (int)float.Parse (info [4]);
+		Variable.appetite = (int)float.Parse (info [5]);
+		Variable.excretion = (int)float.Parse (info [6]);
 	}
 		
 	
