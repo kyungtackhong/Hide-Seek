@@ -12,6 +12,7 @@ public static class Variable{
 	public static int sleep_desire=15;//수면욕
 	public static int appetite=15;//식욕
 	public static int excretion=15;//배설욕
+	public static int timer = 0;
 
 
 }

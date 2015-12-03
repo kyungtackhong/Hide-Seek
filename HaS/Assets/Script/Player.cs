@@ -21,7 +21,6 @@ public class Player : MonoBehaviour {
 	public bool foodSw = false;
 	public static bool sleep_flag = false;
 	public bool excret_flag=false;
-	public int timer=0;
 	public int day=0;
 	public float v = 2;
 	public float x = 0;
@@ -37,7 +36,7 @@ public class Player : MonoBehaviour {
 	RaycastHit hit_0;
 	
 	void Save(){
-		SaveLoad.info [0] = timer+"";
+		SaveLoad.info [0] = Variable.timer+"";
 		SaveLoad.info [1] = this.transform.position.x + "";
 		SaveLoad.info [2] = this.transform.position.z + "";
 		SaveLoad.info [3] = this.transform.position.y + "";
@@ -46,7 +45,7 @@ public class Player : MonoBehaviour {
 	void Load(){
 		string[] info = new string[3];
 		info = SaveLoad.info;
-		timer = int.Parse(info [0]);
+		Variable.timer = int.Parse(info [0]);
 		vec.x = float.Parse(info [1]);
 		vec.z = float.Parse(info [2]);
 		vec.y = float.Parse (info [3]);
@@ -70,8 +69,8 @@ public class Player : MonoBehaviour {
 
 		}*/
 		v = 2; //속도 상수
-		timer++;
-		if (timer % 1200 == 0) { //20초마다 1씩 증가 
+		Variable.timer++;
+		if (Variable.timer % 1200 == 0) { //20초마다 1씩 증가 
 			Variable.sleep_desire++;
 			if(sleep_flag)
 			{
@@ -84,8 +83,8 @@ public class Player : MonoBehaviour {
 			desireSlider[1].value = Variable.excretion;
 			desireSlider[2].value = Variable.sleep_desire;
 		}
-		if (timer > 10000) {//하루가 증가 했다.
-			timer=0;
+		if (Variable.timer > 10000) {//하루가 증가 했다.
+			Variable.timer=0;
 			day++;
 		}
 		//////수면욕///////////
@@ -93,7 +92,7 @@ public class Player : MonoBehaviour {
 			Variable.sleep_desire=100;
 		}
 		if (Variable.sleep_desire >= 80) {//라이트 어둡게, 5초당 한번씩 10퍼확률로 잠들게
-			if(timer%300==0)//5초에 한번씩
+			if(Variable.timer%300==0)//5초에 한번씩
 			{
 				if(Random.Range(0,9)==0)
 				{
@@ -115,7 +114,7 @@ public class Player : MonoBehaviour {
 
 		if (Input.GetKeyDown ("c")) {
 			
-			if (timer % 1200 == 0) { //20초마다 1씩 증가 
+			if (Variable.timer % 1200 == 0) { //20초마다 1씩 증가 
 				Variable.sleep_desire++;
 				Variable.appetite++;
 			}
@@ -249,7 +248,7 @@ public class Player : MonoBehaviour {
 	void sleep()
 	{
 		v = 0;
-		timer++;
+		Variable.timer++;
 	}
 	/*public void foodcollider()
 	{
