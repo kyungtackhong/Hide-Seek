@@ -33,7 +33,7 @@ public class SaveLoad : MonoBehaviour {
 		file.Close();
 
 		Debug.Log ("Deserial" + info[0] + " " + info[1] + " " + info[2]);
-		//Debug.Log (f[0] +"" + f[1] +""+f[2]);
+	
 	}
 
 	public void Return(){
@@ -42,8 +42,7 @@ public class SaveLoad : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//autoSave ();
-		//DontDestroyOnLoad (this);
+	
 	}
 	
 	// Update is called once per frame
