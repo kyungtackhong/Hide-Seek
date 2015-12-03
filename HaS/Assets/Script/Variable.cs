@@ -4,7 +4,7 @@ using System.Collections;
 public static class Variable{
 
 	public static int prevScene = -1;
-	public static int scene = 0; // 0 - hall1, 1- house 1-1
+	public static int scene = 0; // 0 - hall1, 1 - house 1-1, 2 - house 1-2
 								 // 10 - hall2
 								 // 20 - hall3
 								 // 30 - hall4
