@@ -34,13 +34,21 @@ public class Player : MonoBehaviour {
 	private int sprCount=0;
 
 	RaycastHit hit_0;
-	
+
+	static bool save;
+
 	void Save(){
 		SaveLoad.info [0] = Variable.timer+"";
 		SaveLoad.info [1] = this.transform.position.x + "";
 		SaveLoad.info [2] = this.transform.position.z + "";
 		SaveLoad.info [3] = this.transform.position.y + "";
-		
+		SaveLoad.info [4] = Application.loadedLevel+"";
+		SaveLoad.info [5] = Variable.scene+"";
+		SaveLoad.info [6] = Variable.prevScene+"";
+		SaveLoad.info [7] = Variable.sleep_desire + "";
+		SaveLoad.info [8] = Variable.appetite + "";
+		SaveLoad.info [9] = Variable.excretion + "";
+
 	}
 	void Load(){
 		string[] info = new string[3];
@@ -51,23 +59,27 @@ public class Player : MonoBehaviour {
 		vec.y = float.Parse (info [3]);
 		this.transform.position = vec;
 		vec.y = 0;
+		Variable.scene = int.Parse (SaveLoad.info [5]);
+		Variable.prevScene = int.Parse (SaveLoad.info [6]);
+		Variable.sleep_desire= int.Parse (SaveLoad.info [7]);
+		Variable.appetite= int.Parse (SaveLoad.info [8]);
+		Variable.excretion= int.Parse (SaveLoad.info [9]);
 
 	}
 		
 	
 
 	void Update () {
-		/*if (save==true) {
-			Debug.Log (" 로드");
+		if (save==true) {
 			Load();
 			save=false;
 		}
 		if(Input.GetKey(KeyCode.Escape)){
+			SaveLoad.scene = Application.loadedLevel;
 			save=true;
 			Save ();
 			Application.LoadLevel("save");
-
-		}*/
+		}
 		v = 2; //속도 상수
 		Variable.timer++;
 		if (Variable.timer % 1200 == 0) { //20초마다 1씩 증가 
@@ -78,7 +90,6 @@ public class Player : MonoBehaviour {
 			}
 			Variable.appetite++;
 			Variable.excretion++;
-			print ("update");
 			desireSlider[0].value = Variable.appetite;
 			desireSlider[1].value = Variable.excretion;
 			desireSlider[2].value = Variable.sleep_desire;
@@ -118,12 +129,10 @@ public class Player : MonoBehaviour {
 				Variable.sleep_desire++;
 				Variable.appetite++;
 			}
-			print ("달리기");
 			run_flag=true;
 			velocity*=2;
 		}
 		if (Input.GetKeyUp ("c")) {
-			print ("걷기");
 			velocity/=2;
 			run_flag=false;
 		}

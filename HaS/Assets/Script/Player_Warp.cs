@@ -5,6 +5,8 @@ public class Player_Warp : MonoBehaviour {
 
 	void Start()
 	{
+		Debug.Log ("prevscene"+Variable.prevScene);
+		Debug.Log ("scene"+Variable.scene);
 		if(Variable.scene==0)
 		{
 			if(Variable.prevScene==1)

@@ -9,13 +9,11 @@ public class Enemy_Trace : MonoBehaviour {
 	public GameObject enemy;
 	public GameObject player;
 	private NavMeshAgent agent;
-	private SphereCollider col;  
 
 	// Use this for initialization
 	void Start () {
 		targetPos = new Vector3(0,2,0);
 		agent = GetComponent<NavMeshAgent> ();
-		col = GetComponent<SphereCollider> ();
 	}
 	
 	// Update is called once per frame
