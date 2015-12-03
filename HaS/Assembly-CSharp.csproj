@@ -49,11 +49,12 @@
      <Compile Include="Assets\Script\ButtonManager.cs" />
      <Compile Include="Assets\Script\Enemy_Move.cs" />
      <Compile Include="Assets\Script\GetValue.cs" />
-     <Compile Include="Assets\Script\NewBehaviourScript.cs" />
      <Compile Include="Assets\Script\Player.cs" />
      <Compile Include="Assets\Script\Player_Collision.cs" />
+     <Compile Include="Assets\Script\Player_Warp.cs" />
      <Compile Include="Assets\Script\Slot.cs" />
      <Compile Include="Assets\Script\TimerManager.cs" />
+     <Compile Include="Assets\Script\Variable.cs" />
      <Compile Include="Assets\Script\camera_movement.cs" />
      <Compile Include="Assets\Script\food.cs" />
      <Compile Include="Assets\Script\hpbarSample.cs" />

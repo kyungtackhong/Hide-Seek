@@ -15,9 +15,6 @@ public class Player : MonoBehaviour {
 	public Sprite[] sideSpr = new Sprite[5];
 	public Sprite sleepSpr;
 	public int velocity=10;
-	public int sleep_desire=0;//수면욕
-	public int appetite=0;//식욕
-	public int excretion=0;//배설욕
 	public bool run_flag = false;
 	public bool runSw= false;
 	public bool foodSw = false;
@@ -42,27 +39,27 @@ public class Player : MonoBehaviour {
 		v = 2; //속도 상수
 		timer++;
 		if (timer % 1200 == 0) { //20초마다 1씩 증가 
-			sleep_desire++;
+			Variable.sleep_desire++;
 			if(sleep_flag)
 			{
-				sleep_desire-=6;
+				Variable.sleep_desire-=6;
 			}
-			appetite++;
-			excretion++;
+			Variable.appetite++;
+			Variable.excretion++;
 			print ("update");
-			desireSlider[0].value = appetite;
-			desireSlider[1].value = excretion;
-			desireSlider[2].value = sleep_desire;
+			desireSlider[0].value = Variable.appetite;
+			desireSlider[1].value = Variable.excretion;
+			desireSlider[2].value = Variable.sleep_desire;
 		}
 		if (timer > 10000) {//하루가 증가 했다.
 			timer=0;
 			day++;
 		}
 		//////수면욕///////////
-		if (sleep_desire > 100) {
-			sleep_desire=100;
+		if (Variable.sleep_desire > 100) {
+			Variable.sleep_desire=100;
 		}
-		if (sleep_desire >= 80) {//라이트 어둡게, 5초당 한번씩 10퍼확률로 잠들게
+		if (Variable.sleep_desire >= 80) {//라이트 어둡게, 5초당 한번씩 10퍼확률로 잠들게
 			if(timer%300==0)//5초에 한번씩
 			{
 				if(Random.Range(0,9)==0)
@@ -73,7 +70,7 @@ public class Player : MonoBehaviour {
 		}
 
 		///////식욕////////////
-		if (appetite >= 80) {//식욕이 80넘으면 이속 감소
+		if (Variable.appetite >= 80) {//식욕이 80넘으면 이속 감소
 			v = 4 / 5;
 		} else {
 			v = 1;
@@ -86,8 +83,8 @@ public class Player : MonoBehaviour {
 		if (Input.GetKeyDown ("c")) {
 			
 			if (timer % 1200 == 0) { //20초마다 1씩 증가 
-				sleep_desire++;
-				appetite++;
+				Variable.sleep_desire++;
+				Variable.appetite++;
 			}
 			print ("달리기");
 			run_flag=true;
@@ -101,7 +98,7 @@ public class Player : MonoBehaviour {
 		
 		if (Input.GetKeyUp ("v")) { // 똥누기
 			Instantiate(poop,this.transform.position,Quaternion.identity);
-			excretion-=30;
+			Variable.excretion-=30;
 			v=0;
 			pooptime++;
 		}
@@ -132,7 +129,6 @@ public class Player : MonoBehaviour {
 				spr.sprite=sleepSpr;
 			}
 		}
-		Debug.Log (foodSw);
 		if (foodSw == true) 
 			foodSw = false;
 		if (Input.GetKeyUp ("x")) {
@@ -232,22 +228,22 @@ public class Player : MonoBehaviour {
 		pos.y = 50;
 		_camera.transform.position = pos;
 		_light.transform.position = pos;
-		if (sleep_desire > 100) 
-			sleep_desire = 100;
-		else if (sleep_desire < 0)
-			sleep_desire = 0;
-		if (appetite > 100) 
-			appetite = 100;
-		else if (appetite < 0)
-			appetite = 0;
-		if (excretion > 100) 
-			excretion = 100;
-		else if (excretion < 0)
-			excretion = 0;
+		if (Variable.sleep_desire > 100) 
+			Variable.sleep_desire = 100;
+		else if (Variable.sleep_desire < 0)
+			Variable.sleep_desire = 0;
+		if (Variable.appetite > 100) 
+			Variable.appetite = 100;
+		else if (Variable.appetite < 0)
+			Variable.appetite = 0;
+		if (Variable.excretion > 100) 
+			Variable.excretion = 100;
+		else if (Variable.excretion < 0)
+			Variable.excretion = 0;
 
-		desireSlider[0].value = appetite/100f;
-		desireSlider[1].value = excretion/100f;
-		desireSlider[2].value = sleep_desire/100f;
+		desireSlider[0].value = Variable.appetite/100f;
+		desireSlider[1].value = Variable.excretion/100f;
+		desireSlider[2].value = Variable.sleep_desire/100f;
 	}
 	void sleep()
 	{

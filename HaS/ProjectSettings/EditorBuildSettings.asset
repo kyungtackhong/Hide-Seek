@@ -10,4 +10,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/startMenu.unity
   - enabled: 1
-    path: Assets/Scene/scene.unity
+    path: Assets/Scene/House1-1Scene.unity
+  - enabled: 1
+    path: Assets/Scene/Hall1Scene.unity

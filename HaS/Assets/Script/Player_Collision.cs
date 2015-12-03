@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Player_Collision : MonoBehaviour {
@@ -40,9 +40,9 @@ public class Player_Collision : MonoBehaviour {
 		if (col.gameObject.tag=="food" && com.foodSw == true)
 		{
 			Destroy (col.gameObject);
-			com.appetite-=5;
-			if(com.appetite<0)
-				com.appetite=0;
+			Variable.appetite-=5;
+			if(Variable.appetite<0)
+				Variable.appetite=0;
 		}
 	}
 }
