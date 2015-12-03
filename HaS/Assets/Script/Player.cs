@@ -170,45 +170,12 @@ public class Player : MonoBehaviour {
 		if (foodSw == true) 
 			foodSw = false;
 		if (Input.GetKeyUp ("x")) {
-			foodSw= true;
-			/*x = 1f;
-			z = 0;
-			vec.x = x*Time.deltaTime*velocity*v;
-			vec.z = z*Time.deltaTime*velocity*v;
-			ray_position=this.transform.position;
-			ray_direction_R=vec;
-			
-			//foodcollider();
-			x = -1f;
-			z = 0;
-			vec.x = x*Time.deltaTime*velocity*v;
-			vec.z = z*Time.deltaTime*velocity*v;
-			ray_position=this.transform.position;
-			ray_direction_R=vec;
-			//foodcollider();
-			
-			x = 0;
-			z = 1;
-			
-			vec.x = x*Time.deltaTime*velocity*v;
-			vec.z = z*Time.deltaTime*velocity*v;
-			ray_position=this.transform.position;
-			ray_direction_R=vec;
-			//foodcollider();
-			
-			x = 0;
-			z = -1;
-			
-			vec.x = x*Time.deltaTime*velocity*v;
-			vec.z = z*Time.deltaTime*velocity*v;
-			ray_position=this.transform.position;
-			ray_direction_R=vec;
-			//foodcollider();*/
-			
+			foodSw = true;
 		}
-		//if(Input.GetButton
 
 		if ((Input.GetButton ("Horizontal") || Input.GetButton ("Vertical")) && sleep_flag == false) {
+			if(_audio.isPlaying==false)
+				_audio.Play ();
 			runSw = run_flag;
 			++sprCount;
 			x = Input.GetAxisRaw ("Horizontal");
@@ -259,8 +226,10 @@ public class Player : MonoBehaviour {
 				}
 			}
 			this.transform.position += vec;
-		} else
+		} else {
+			_audio.Stop ();
 			runSw = false;
+		}
 		Vector3 pos = transform.position;
 		pos.y = 50;
 		_camera.transform.position = pos;

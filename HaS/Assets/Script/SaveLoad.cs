@@ -42,7 +42,7 @@ public class SaveLoad : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		autoSave ();
+		//autoSave ();
 		//DontDestroyOnLoad (this);
 	}
 	
