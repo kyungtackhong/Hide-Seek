@@ -4,6 +4,7 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	public GameObject _camera;
+	public AudioSource _audio;
 	public GameObject _light;
 	public GameObject poop;
 	public GameObject player;
@@ -220,7 +221,6 @@ public class Player : MonoBehaviour {
 					
 				}
 			}
-			
 			this.transform.position += vec;
 		} else
 			runSw = false;

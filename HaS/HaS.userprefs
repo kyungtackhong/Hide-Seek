@@ -1,8 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\Chapter2_roborobo\Assets\3_Script\AnimationChk.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Player_Collision.cs">
     <Files>
-      <File FileName="..\..\Chapter2_roborobo\Assets\3_Script\AnimationChk.cs" Line="14" Column="30" />
+      <File FileName="Assets\Script\Player.cs" Line="174" Column="97" />
+      <File FileName="Assets\Script\Player_Collision.cs" Line="13" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
