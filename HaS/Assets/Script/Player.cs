@@ -35,8 +35,45 @@ public class Player : MonoBehaviour {
 	private int sprCount=0;
 
 	RaycastHit hit_0;
+	
+	void Save(){
+		SaveLoad.info [0] = timer+"";
+		SaveLoad.info [1] = this.transform.position.x + "";
+		SaveLoad.info [2] = this.transform.position.z + "";
+		SaveLoad.info [3] = this.transform.position.y + "";
+		SaveLoad.info [4] = sleep_desire + "";
+		SaveLoad.info [5] = appetite + "";
+		SaveLoad.info [6] = excretion + "";
+
+	}
+	void Load(){
+		string[] info = new string[3];
+		info = SaveLoad.info;
+		timer = int.Parse(info [0]);
+		vec.x = float.Parse(info [1]);
+		vec.z = float.Parse(info [2]);
+		vec.y = float.Parse (info [3]);
+		this.transform.position = vec;
+		vec.y = 0;
+		sleep_desire = (int)float.Parse (info [4]);
+		appetite = (int)float.Parse (info [5]);
+		excretion = (int)float.Parse (info [6]);
+	}
+		
+	
 
 	void Update () {
+		if (save==true) {
+			Debug.Log (" 로드");
+			Load();
+			save=false;
+		}
+		if(Input.GetKey(KeyCode.Escape)){
+			save=true;
+			Save ();
+			Application.LoadLevel("save");
+
+		}
 		v = 2; //속도 상수
 		timer++;
 		if (timer % 1200 == 0) { //20초마다 1씩 증가 
