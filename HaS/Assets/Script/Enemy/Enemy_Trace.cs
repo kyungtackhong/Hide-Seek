@@ -3,8 +3,9 @@ using System.Collections;
 
 public class Enemy_Trace : MonoBehaviour {
 
-	public float fieldOfViewAngle = 110f;
-	public bool playerInSight;
+	public float fieldOfViewAngle;
+	public bool playerInSight = false;
+	public bool playerInSound = false;
 	public Vector3 targetPos;
 	public GameObject enemy;
 	public GameObject player;
@@ -29,6 +30,14 @@ public class Enemy_Trace : MonoBehaviour {
 		Vector3 pos = this.transform.position;
 		pos.y = 1;
 		transform.position = pos;
+		if(playerInSound == true && transform.position == targetPos)
+		{
+			playerInSound = false;
+		}
+		else if(playerInSight == true && transform.position == targetPos)
+		{
+			playerInSight = false;
+		}
 	}
 
 
@@ -38,8 +47,7 @@ public class Enemy_Trace : MonoBehaviour {
 		if(other.gameObject.tag == "Player")
 		{
 			// By default the player is not in sight.
-			playerInSight = false;
-			
+
 			// Create a vector from the enemy to the player and store the angle between it and forward.
 			Vector3 direction = other.transform.position - transform.position;
 			float angle = Vector3.Angle(direction, transform.forward);
@@ -69,17 +77,18 @@ public class Enemy_Trace : MonoBehaviour {
 			{
 				targetPos = player.transform.position;
 				agent.destination=targetPos;
+				playerInSound = true;
 			}
 		}
 	}
 	
-	void OnTriggerExit (Collider other)
+	/*void OnTriggerExit (Collider other)
 	{
 		// If the player leaves the trigger zone...
 		if (other.gameObject.tag == "Player") 
 		{
 			playerInSight = false;
 		}
-	}
+	}*/
 
 }
