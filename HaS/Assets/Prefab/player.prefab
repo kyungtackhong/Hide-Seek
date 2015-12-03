@@ -14,6 +14,8 @@ GameObject:
   - 54: {fileID: 5401698}
   - 114: {fileID: 11453862}
   - 114: {fileID: 11430836}
+  - 82: {fileID: 8200900}
+  - 114: {fileID: 11468328}
   m_Layer: 8
   m_Name: player
   m_TagString: Player
@@ -44,7 +46,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 147532}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 1, z: 65}
+  m_LocalPosition: {x: -95, y: 1, z: 215}
   m_LocalScale: {x: 6, y: 2, z: 6}
   m_Children:
   - {fileID: 485330}
@@ -120,6 +122,75 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .567316949, y: 1, z: .927888095}
   m_Center: {x: -.0216338634, y: 0, z: -.0360565186}
+--- !u!82 &8200900
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147532}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: df50fce337560f14daedf9cd5ef4ef30, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: .5
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11430836
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -172,9 +243,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: af3833afe1df0614289ddfdabb1caca4, type: 3}
   sleepSpr: {fileID: 21300000, guid: 53450f299564d5e46a0ed95c13997d2f, type: 3}
   velocity: 10
-  sleep_desire: 20
-  appetite: 20
-  excretion: 20
   run_flag: 0
   runSw: 0
   foodSw: 0
@@ -186,6 +254,17 @@ MonoBehaviour:
   z: 0
   script: {fileID: 0}
   pooptime: 0
+--- !u!114 &11468328
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01911efaa39d5b6418a63c5e63fd7b0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21206738
 SpriteRenderer:
   m_ObjectHideFlags: 1
