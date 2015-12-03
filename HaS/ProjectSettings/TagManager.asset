@@ -11,6 +11,8 @@ TagManager:
   - Object
   - House 1-1
   - Hall1
+  - Hall2
+  - Hall3
   layers:
   - Default
   - TransparentFX

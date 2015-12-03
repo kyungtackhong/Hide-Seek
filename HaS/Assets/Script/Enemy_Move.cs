@@ -40,10 +40,10 @@ public class Enemy_Move : MonoBehaviour {
 		pos.y = 1;
 		transform.position = pos;
 		if (!playerInSight) {
-			col.radius=3;
+			col.radius=2;
 			transform.Rotate (0, 1f, 0);
 		} else {
-			col.radius=6;
+			col.radius=4;
 			++sprCount;
 		}
 		Vector3 ang = enemy.transform.eulerAngles;
