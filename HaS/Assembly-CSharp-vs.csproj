@@ -61,9 +61,7 @@
      <Compile Include="Assets\Script\camera_movement.cs" />
      <Compile Include="Assets\Script\food.cs" />
      <Compile Include="Assets\Script\hpbarSample.cs" />
-     <Compile Include="Assets\Script\inventory.cs" />
      <Compile Include="Assets\Script\mainlight.cs" />
-     <Compile Include="Assets\Script\mapmap.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/unity5.1.2/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
