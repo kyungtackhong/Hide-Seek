@@ -2,15 +2,16 @@
 using UnityEngine.UI;
 using System.Collections;
 public class Player : MonoBehaviour {
-
+	
 	public GameObject _camera;
 	public AudioSource _audio;
 	public GameObject _light;
 	public GameObject poop;
 	public GameObject player;
 	public SpriteRenderer spr;
-
+	public bool hideSw = false;
 	public Slider[] desireSlider = new Slider[3];
+	public static Vector3 playerposition;
 	public Sprite[] upSpr = new Sprite[5];
 	public Sprite[] downSpr = new Sprite[5];
 	public Sprite[] sideSpr = new Sprite[5];
@@ -19,6 +20,8 @@ public class Player : MonoBehaviour {
 	public bool run_flag = false;
 	public bool runSw= false;
 	public bool foodSw = false;
+	public bool inventory_flag=false;
+	public bool map_flag = false;
 	public static bool sleep_flag = false;
 	public bool excret_flag=false;
 	public int day=0;
@@ -30,13 +33,13 @@ public class Player : MonoBehaviour {
 	Vector3 ray_position;
 	Vector3 ray_direction_R;
 	public int pooptime=0;
-
+	public int sight=0;
 	private int sprCount=0;
-
+	
 	RaycastHit hit_0;
-
+	
 	static bool save;
-
+	
 	void Save(){
 		SaveLoad.info [0] = Variable.timer+"";
 		SaveLoad.info [1] = this.transform.position.x + "";
@@ -48,7 +51,7 @@ public class Player : MonoBehaviour {
 		SaveLoad.info [7] = Variable.sleep_desire + "";
 		SaveLoad.info [8] = Variable.appetite + "";
 		SaveLoad.info [9] = Variable.excretion + "";
-
+		
 	}
 	void Load(){
 		string[] info = new string[3];
@@ -64,11 +67,11 @@ public class Player : MonoBehaviour {
 		Variable.sleep_desire= int.Parse (SaveLoad.info [7]);
 		Variable.appetite= int.Parse (SaveLoad.info [8]);
 		Variable.excretion= int.Parse (SaveLoad.info [9]);
-
-	}
 		
+	}
 	
-
+	
+	
 	void Update () {
 		if (save==true) {
 			Load();
@@ -111,7 +114,21 @@ public class Player : MonoBehaviour {
 				}
 			}
 		}
-
+		if (Variable.timer >= 0 && Variable.timer < 3000) {
+			sight=50;
+		}
+		if (Variable.timer >= 3000 && Variable.timer < 6000) {
+			sight=40;
+		}
+		if (Variable.timer >= 6000 && Variable.timer < 9000) {
+			sight=30;
+		}
+		if (Variable.timer >= 9000 && Variable.timer < 12000) {
+			sight=40;
+		}
+		if ((Variable.timer % 3000) == 0) {
+			mainlight.change_range (sight);
+		}
 		///////식욕////////////
 		if (Variable.appetite >= 80) {//식욕이 80넘으면 이속 감소
 			v = 4 / 5;
@@ -122,8 +139,8 @@ public class Player : MonoBehaviour {
 			sleep ();
 		}
 		////////배설욕////
-
-		if (Input.GetKeyDown ("c")) {
+		
+		if (Input.GetKeyDown ("left shift")) {
 			
 			if (Variable.timer % 1200 == 0) { //20초마다 1씩 증가 
 				Variable.sleep_desire++;
@@ -132,12 +149,12 @@ public class Player : MonoBehaviour {
 			run_flag=true;
 			velocity*=2;
 		}
-		if (Input.GetKeyUp ("c")) {
+		if (Input.GetKeyUp ("left shift"))  {
 			velocity/=2;
 			run_flag=false;
 		}
 		
-		if (Input.GetKeyUp ("v")) { // 똥누기
+		if (Input.GetKeyUp ("s")) { // 똥누기
 			Instantiate(poop,this.transform.position,Quaternion.identity);
 			Variable.excretion-=30;
 			v=0;
@@ -150,11 +167,11 @@ public class Player : MonoBehaviour {
 		if (pooptime > 60) {
 			pooptime=0;
 		}
-		if (Input.GetKeyDown ("z")) {
+		if (Input.GetKeyDown ("a")) {
 			if(sleep_flag==true)
 			{
 				AudioListener.volume = 1F;
-				mainlight.change_range (50);
+				mainlight.change_range (sight);
 				_light.GetComponent<SphereCollider>().radius*=2;
 				print ("깨기");
 				sleep_flag=false;
@@ -163,7 +180,7 @@ public class Player : MonoBehaviour {
 			else
 			{
 				AudioListener.volume = 2F;
-				mainlight.change_range (25);
+				mainlight.change_range (sight/2);
 				_light.GetComponent<SphereCollider>().radius/=2;
 				print ("잠자기");
 				sleep_flag=true;
@@ -175,51 +192,86 @@ public class Player : MonoBehaviour {
 		if (Input.GetKeyUp ("x")) {
 			foodSw = true;
 		}
-
-		if ((Input.GetButton ("Horizontal") || Input.GetButton ("Vertical")) && sleep_flag == false) {
-			if(_audio.isPlaying==false)
-				_audio.Play ();
-			runSw = run_flag;
-			++sprCount;
-			x = Input.GetAxisRaw ("Horizontal");
-			z = Input.GetAxisRaw ("Vertical");
-			if (x > 0) {
-				spr.sprite = sideSpr [(sprCount / 10) % 5];
-				player.transform.localScale = new Vector3 (1.5f, 1.5f, 3);
-			} else if (x < 0) {
-				spr.sprite = sideSpr [(sprCount / 10) % 5];
-				player.transform.localScale = new Vector3 (-1.5f, 1.5f, 3);
-			}
-			if (z > 0) {
-				spr.sprite = upSpr [(sprCount / 10) % 5];
-				player.transform.localScale = new Vector3 (1.5f, 1.5f, 3);
-			} else if (z < 0) {
-				spr.sprite = downSpr [(sprCount / 10) % 5];
-				player.transform.localScale = new Vector3 (1.5f, 1.5f, 3);
-			}
-			vec.x = x * Time.deltaTime * velocity * v;
-			vec.z = z * Time.deltaTime * velocity * v;
-			ray_position = this.transform.position;
-			ray_direction_R = vec;
-			if (Physics.Raycast (ray_position, ray_direction_R, out hit_0, 2.5f)) {
-				if (hit_0.collider.tag == "Wall") {
-					vec.x = 0;
-					vec.z = 0;
+		if (Input.GetKeyDown ("x")) {//숨기
+			if(hideSw ==false)
+			{
+				if (Physics.Raycast (ray_position, ray_direction_R, out hit_0, 3f)) {
+					if (hit_0.collider.tag == "Hide") {
+						print ("숨기");
+						hideSw = true;
+						player.SetActive(false);
+						//this.transform.localScale=new Vector3(0.0f,0.0f,0.0f);
+						//Instantiate(poop,this.transform.position+vec*30,Quaternion.identity);
+					}
+					
 				}
-				
+			}
+			else{
+				//똥 파괴 해야함
+				player.SetActive(true);
+				//this.transform.localScale=new Vector3(6.0f,2.0f,6.0f);
+				hideSw=false;
+			}
+		}
+		if (hideSw == true)
+			v = 0;
+		if (Input.GetKeyUp ("i")) {
+			//inventory.showinventory ();
+			if (inventory_flag == false) {
+				inventory_flag = true;
+				mainlight.change_range (100);
+				Variable.timer--;
+				if (sleep_flag == true)
+					Variable.timer--;
+			} else {
+				inventory_flag = false;
+				mainlight.change_range (sight);
 			}
 			
-			if (x != 0 && z != 0) {
-				for (int i=0; i<10; i++) {
-					float j = (float)i / 10 + 3f;
-					if (Physics.Raycast (ray_position, ray_direction_R, out hit_0, j)) {
-						if (hit_0.collider.tag == "Wall") {
-							vec.x = 0;
-							vec.z = 0;
-						}
-					}
-				}
+		}
+		if (Input.GetKeyDown ("m")) {
+			//mapmap.showmap ();
+			if (map_flag == false) {
+				map_flag=true;
+				mainlight.change_range (100);
+				Variable.timer--;
+				inventory_flag = true;
+				if (sleep_flag == true)
+					Variable.timer--;
 			} else {
+				inventory_flag = false;
+				map_flag=false;
+				mainlight.change_range (sight);
+			}
+			
+		}
+		if (inventory_flag == false || hideSw == false) {
+			if ((Input.GetButton ("Horizontal") || Input.GetButton ("Vertical")) && sleep_flag == false) {
+				if (_audio.isPlaying == false)
+					_audio.Play ();
+				runSw = run_flag;
+				++sprCount;
+				x = Input.GetAxisRaw ("Horizontal");
+				z = Input.GetAxisRaw ("Vertical");
+				vec.x = x * Time.deltaTime * velocity * v;
+				vec.z = z * Time.deltaTime * velocity * v;
+				if (x > 0) {
+					spr.sprite = sideSpr [(sprCount / 10) % 5];
+					player.transform.localScale = new Vector3 (1.5f, 1.5f, 3);
+				} else if (x < 0) {
+					spr.sprite = sideSpr [(sprCount / 10) % 5];
+					player.transform.localScale = new Vector3 (-1.5f, 1.5f, 3);
+				}
+				if (z > 0) {
+					spr.sprite = upSpr [(sprCount / 10) % 5];
+					player.transform.localScale = new Vector3 (1.5f, 1.5f, 3);
+				} else if (z < 0) {
+					spr.sprite = downSpr [(sprCount / 10) % 5];
+					player.transform.localScale = new Vector3 (1.5f, 1.5f, 3);
+				}
+				
+				ray_position = this.transform.position;
+				ray_direction_R = vec;
 				if (Physics.Raycast (ray_position, ray_direction_R, out hit_0, 2.5f)) {
 					if (hit_0.collider.tag == "Wall") {
 						vec.x = 0;
@@ -227,11 +279,24 @@ public class Player : MonoBehaviour {
 					}
 					
 				}
+				
+				if (x != 0 && z != 0) {
+					for (int i=0; i<10; i++) {
+						float j = (float)i / 10 + 3f;
+						if (Physics.Raycast (ray_position, ray_direction_R, out hit_0, j)) {
+							if (hit_0.collider.tag == "Wall") {
+								vec.x = 0;
+								vec.z = 0;
+							}
+						}
+					}
+				} 
+				this.transform.position += vec;
+				playerposition=this.transform.position;
+			} else {
+				_audio.Stop ();
+				runSw = false;
 			}
-			this.transform.position += vec;
-		} else {
-			_audio.Stop ();
-			runSw = false;
 		}
 		Vector3 pos = transform.position;
 		pos.y = 50;
@@ -249,7 +314,7 @@ public class Player : MonoBehaviour {
 			Variable.excretion = 100;
 		else if (Variable.excretion < 0)
 			Variable.excretion = 0;
-
+		
 		desireSlider[0].value = Variable.appetite/100f;
 		desireSlider[1].value = Variable.excretion/100f;
 		desireSlider[2].value = Variable.sleep_desire/100f;
@@ -259,17 +324,5 @@ public class Player : MonoBehaviour {
 		v = 0;
 		Variable.timer++;
 	}
-	/*public void foodcollider()
-	{
-		if(Physics.Raycast (ray_position, ray_direction_R,out hit_0,4f))
-		{
-			if(hit_0.collider.tag=="rice")
-			{
-				print ("먹기");
-				food.food_destroy(this.transform.position.x,this.transform.position.z);
-			}
-			
-		}
-		
-	}*/
+	
 }

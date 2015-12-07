@@ -21,30 +21,28 @@ public class Enemy_Trace : MonoBehaviour {
 	void Update () {
 		if(Vector3.Distance(player.transform.position,transform.position)<player.GetComponent<Player>()._light.GetComponent<SphereCollider>().radius*4)
 		{
-			enemy.SetActive(true);
+			//enemy.SetActive(true);
 		}
 		else
 		{
-			enemy.SetActive(false);
+			//enemy.SetActive(false);
 		}
 		Vector3 pos = this.transform.position;
 		pos.y = 1;
 		transform.position = pos;
-		if(playerInSound == true && transform.position == targetPos)
-		{
-			playerInSound = false;
-		}
-		else if(playerInSight == true && transform.position == targetPos)
-		{
-			playerInSight = false;
-		}
+		playerInSight=false;
+		playerInSound=false;
+		if (Vector3.Distance (transform.position, player.transform.position) > 100) 
+			GetComponent<AudioSource> ().mute = true;
+		else
+			GetComponent<AudioSource> ().mute = false;
 	}
 
 
 	void OnTriggerStay (Collider other)
 	{
 		// If the player has entered the trigger sphere...
-		if(other.gameObject.tag == "Player")
+		if(other.gameObject.tag == "Player" && player.GetComponent<Player>().hideSw==false)
 		{
 			// By default the player is not in sight.
 
@@ -68,17 +66,31 @@ public class Enemy_Trace : MonoBehaviour {
 						playerInSight = true;
 						// Set the last global sighting is the players current position.
 						targetPos = player.transform.position;
-						agent.destination=targetPos;
+						//agent.destination=targetPos;
 						return;
 					}
+					else
+						playerInSight=false;
 				}
+				else
+					playerInSight=false;
 			}
+			else
+				playerInSight=false;
 			if(player.GetComponent<Player>().runSw==true || player.GetComponent<Player_Collision>().soundSw==true)
 			{
 				targetPos = player.transform.position;
-				agent.destination=targetPos;
+				//agent.destination=targetPos;
 				playerInSound = true;
 			}
+			else
+			{
+				playerInSound = false;
+			}
+		}
+		else
+		{
+
 		}
 	}
 	

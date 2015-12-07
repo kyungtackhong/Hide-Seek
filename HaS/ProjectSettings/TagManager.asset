@@ -15,6 +15,7 @@ TagManager:
   - Hall3
   - Hall4
   - House 1-2
+  - Hide
   layers:
   - Default
   - TransparentFX

@@ -13,7 +13,7 @@ public class Player_Collision : MonoBehaviour {
 
 	void OnCollisionEnter(Collision col)
 	{
-		if(col.gameObject.tag=="Object" || col.gameObject.tag=="Wall")
+		if(col.gameObject.tag=="Object" || col.gameObject.tag=="Wall" || col.gameObject.tag=="Hide")
 		{
 			soundSw=true;
 		}
@@ -21,7 +21,7 @@ public class Player_Collision : MonoBehaviour {
 
 	void OnCollisionStay(Collision col)
 	{
-		if(col.gameObject.tag=="Object" || col.gameObject.tag=="Wall")
+		if(col.gameObject.tag=="Object" || col.gameObject.tag=="Wall" || col.gameObject.tag=="Hide")
 		{
 			soundSw=false;
 		}
@@ -29,7 +29,7 @@ public class Player_Collision : MonoBehaviour {
 
 	void OnCollisionExit(Collision col)
 	{
-		if(col.gameObject.tag=="Object" || col.gameObject.tag=="Wall")
+		if(col.gameObject.tag=="Object" || col.gameObject.tag=="Wall" || col.gameObject.tag=="Hide")
 		{
 			soundSw=false;
 		}
