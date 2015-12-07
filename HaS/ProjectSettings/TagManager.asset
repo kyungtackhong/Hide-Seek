@@ -15,9 +15,6 @@ TagManager:
   - Hall3
   - Hall4
   - House 1-2
-  - rice
-  - UI
-  - table
   layers:
   - Default
   - TransparentFX
