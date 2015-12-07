@@ -16,6 +16,7 @@ TagManager:
   - Hall4
   - House 1-2
   - Hide
+  - UI
   layers:
   - Default
   - TransparentFX

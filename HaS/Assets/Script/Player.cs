@@ -216,7 +216,8 @@ public class Player : MonoBehaviour {
 		if (hideSw == true)
 			v = 0;
 		if (Input.GetKeyUp ("i")) {
-			//inventory.showinventory ();
+			_audio.Stop();
+			inventory.showinventory ();
 			if (inventory_flag == false) {
 				inventory_flag = true;
 				mainlight.change_range (100);
@@ -230,7 +231,8 @@ public class Player : MonoBehaviour {
 			
 		}
 		if (Input.GetKeyDown ("m")) {
-			//mapmap.showmap ();
+			_audio.Stop();
+			mapmap.showmap ();
 			if (map_flag == false) {
 				map_flag=true;
 				mainlight.change_range (100);
@@ -245,7 +247,7 @@ public class Player : MonoBehaviour {
 			}
 			
 		}
-		if (inventory_flag == false || hideSw == false) {
+		if (inventory_flag == false && hideSw == false) {
 			if ((Input.GetButton ("Horizontal") || Input.GetButton ("Vertical")) && sleep_flag == false) {
 				if (_audio.isPlaying == false)
 					_audio.Play ();

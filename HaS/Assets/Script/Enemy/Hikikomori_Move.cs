@@ -51,7 +51,6 @@ public class Hikikomori_Move : MonoBehaviour {
 		Vector3 pos = transform.position;
 		pos.y = 1;
 		transform.position = pos;
-		Debug.Log (step);
 		if (!trace.playerInSight && !trace.playerInSound) {
 			if(step == 1 || step == 3 || step ==5 || step == 7 || step == 8 || step == 10 || step == 12)
 			{
@@ -64,9 +63,6 @@ public class Hikikomori_Move : MonoBehaviour {
 			}
 			if(step ==4)	// 컴퓨터
 			{
-				Debug.Log ("배설:"+excretion);
-				Debug.Log ("식욕:"+appetite);
-				Debug.Log ("수면:"+sleep_desire);
 				if(excretion>=60)
 				{
 					_audio.clip = _walk;

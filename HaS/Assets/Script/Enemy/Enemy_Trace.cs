@@ -21,11 +21,11 @@ public class Enemy_Trace : MonoBehaviour {
 	void Update () {
 		if(Vector3.Distance(player.transform.position,transform.position)<player.GetComponent<Player>()._light.GetComponent<SphereCollider>().radius*4)
 		{
-			//enemy.SetActive(true);
+			enemy.SetActive(true);
 		}
 		else
 		{
-			//enemy.SetActive(false);
+			enemy.SetActive(false);
 		}
 		Vector3 pos = this.transform.position;
 		pos.y = 1;
