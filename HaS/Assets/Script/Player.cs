@@ -117,16 +117,16 @@ public class Player : MonoBehaviour {
 		if (Variable.timer >= 0 && Variable.timer < 3000) {
 			sight=50;
 		}
-		if (Variable.timer >= 3000 && Variable.timer < 6000) {
+		else if (Variable.timer >= 3000 && Variable.timer < 6000) {
 			sight=40;
 		}
-		if (Variable.timer >= 6000 && Variable.timer < 9000) {
+		else if (Variable.timer >= 6000 && Variable.timer < 9000) {
 			sight=30;
 		}
-		if (Variable.timer >= 9000 && Variable.timer < 12000) {
+		else if (Variable.timer >= 9000 && Variable.timer < 12000) {
 			sight=40;
 		}
-		if ((Variable.timer % 3000) == 0) {
+		else if ((Variable.timer % 3000) == 0) {
 			mainlight.change_range (sight);
 		}
 		///////식욕////////////
