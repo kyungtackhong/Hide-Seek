@@ -45,9 +45,9 @@ public class mapmap : MonoBehaviour {
 		if (capturemap == true) {
 			menu.SetActive(false);
 			Camera.main.orthographicSize =50;
-			vec=Player.playerposition;
-			Player.playerposition -=Player.playerposition;
-			Camera.main.transform.position -=vec;
+			//vec=Player.playerposition;
+			//Player.playerposition -=Player.playerposition;
+			//Camera.main.transform.position -=vec;
 			StartCoroutine (capture ());
 			capturemap = false;
 		}
@@ -92,7 +92,7 @@ public class mapmap : MonoBehaviour {
 		
 		GUILayout.BeginArea (new Rect (width/10,height/10, width, height));
 		GUILayout.BeginHorizontal ();
-		GUI.DrawTexture(new Rect(-width*2/10, -height/20, width*1.15f,height), map2);
+		GUI.DrawTexture(new Rect(-width*1/10, -height/20, width*1.15f,height), map2);
 		GUILayout.EndHorizontal ();
 		GUILayout.EndArea ();
 		
@@ -103,7 +103,7 @@ public class mapmap : MonoBehaviour {
 		//this.camera.orthographicSize += 70;
 		map2 = new Texture2D (Screen.width, Screen.height, TextureFormat.ARGB32, false);
 		//RenderTexture.active = map1;
-		map2.ReadPixels (new Rect (Screen.width/5,0, Screen.width, Screen.height), 0, 0);
+		map2.ReadPixels (new Rect (Screen.width/10,0, Screen.width, Screen.height), 0, 0);
 		
 		map2.Apply ();
 		Camera.main.orthographicSize = 30;
@@ -111,8 +111,8 @@ public class mapmap : MonoBehaviour {
 		Debug.Log (vec.x);
 		Debug.Log (vec.z);
 		
-		Player.playerposition +=vec;
-		Camera.main.transform.position +=vec;
+		//Player.playerposition +=vec;
+		//Camera.main.transform.position +=vec;
 	}
 	
 }

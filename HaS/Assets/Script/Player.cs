@@ -189,8 +189,22 @@ public class Player : MonoBehaviour {
 		}
 		if (foodSw == true) 
 			foodSw = false;
-		if (Input.GetKeyUp ("x")) {
+		if (Input.GetKeyUp ("c")) {
 			foodSw = true;
+			/*if (Physics.Raycast (ray_position, ray_direction_R, out hit_0, 3f)) {
+				if (hit_0.collider.tag == "knife") {
+					print ("inventory");
+					inventory.addItem ("knife");
+				}
+				if (hit_0.collider.tag == "hammer") {
+					print ("inventory");
+					inventory.addItem ("망치");
+				}
+				if (hit_0.collider.tag == "watch") {
+					print ("inventory");
+					inventory.addItem ("시계");
+				}
+			}*/
 		}
 		if (Input.GetKeyDown ("x")) {//숨기
 			if(hideSw ==false)
@@ -220,7 +234,7 @@ public class Player : MonoBehaviour {
 			inventory.showinventory ();
 			if (inventory_flag == false) {
 				inventory_flag = true;
-				mainlight.change_range (100);
+				mainlight.change_range (0);
 				Variable.timer--;
 				if (sleep_flag == true)
 					Variable.timer--;
@@ -235,7 +249,7 @@ public class Player : MonoBehaviour {
 			mapmap.showmap ();
 			if (map_flag == false) {
 				map_flag=true;
-				mainlight.change_range (100);
+				mainlight.change_range (0);
 				Variable.timer--;
 				inventory_flag = true;
 				if (sleep_flag == true)

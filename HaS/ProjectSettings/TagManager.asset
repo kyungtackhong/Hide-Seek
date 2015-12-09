@@ -17,6 +17,9 @@ TagManager:
   - House 1-2
   - Hide
   - UI
+  - hammer
+  - knife
+  - watch
   layers:
   - Default
   - TransparentFX

@@ -25,7 +25,7 @@ public class Enemy_Trace : MonoBehaviour {
 		}
 		else
 		{
-			enemy.SetActive(false);
+			//enemy.SetActive(false);
 		}
 		Vector3 pos = this.transform.position;
 		pos.y = 1;
