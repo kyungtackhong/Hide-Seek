@@ -157,7 +157,7 @@ public class inventory : MonoBehaviour {
 			GUI.Box (new Rect (0 + (cursor - 2) * boxwidth + (cursor - 2) * w+5, boxheight+1*h+5,boxwidth+10,boxheight+10), select);
 		}
 		int x = 0;
-		int y = 0;
+//		int y = 0;
 
 		if (item_count >= 1) {
 			GUI.Box (new Rect (0 + x * boxwidth + x * w+10, 10, boxwidth,boxheight), items [0].tex);

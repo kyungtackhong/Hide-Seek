@@ -6,17 +6,11 @@ public class Enemy_Trace : MonoBehaviour {
 	public float fieldOfViewAngle;
 	public bool playerInSight = false;
 	public bool playerInSound = false;
-	public Vector3 targetPos;
+	public Vector3 targetSightPos;
+	public Vector3 targetSoundPos;
 	public GameObject enemy;
 	public GameObject player;
-	private NavMeshAgent agent;
 
-	// Use this for initialization
-	void Start () {
-		targetPos = new Vector3(0,2,0);
-		agent = GetComponent<NavMeshAgent> ();
-	}
-	
 	// Update is called once per frame
 	void Update () {
 		if(Vector3.Distance(player.transform.position,transform.position)<player.GetComponent<Player>()._light.GetComponent<SphereCollider>().radius*4)
@@ -25,13 +19,11 @@ public class Enemy_Trace : MonoBehaviour {
 		}
 		else
 		{
-			//enemy.SetActive(false);
+			enemy.SetActive(false);
 		}
 		Vector3 pos = this.transform.position;
 		pos.y = 1;
 		transform.position = pos;
-		playerInSight=false;
-		playerInSound=false;
 		if (Vector3.Distance (transform.position, player.transform.position) > 100) 
 			GetComponent<AudioSource> ().mute = true;
 		else
@@ -65,7 +57,7 @@ public class Enemy_Trace : MonoBehaviour {
 						// ... the player is in sight.
 						playerInSight = true;
 						// Set the last global sighting is the players current position.
-						targetPos = player.transform.position;
+						targetSightPos = player.transform.position;
 						//agent.destination=targetPos;
 						return;
 					}
@@ -79,7 +71,7 @@ public class Enemy_Trace : MonoBehaviour {
 				playerInSight=false;
 			if(player.GetComponent<Player>().runSw==true || player.GetComponent<Player_Collision>().soundSw==true)
 			{
-				targetPos = player.transform.position;
+				targetSoundPos = player.transform.position;
 				//agent.destination=targetPos;
 				playerInSound = true;
 			}
@@ -94,13 +86,14 @@ public class Enemy_Trace : MonoBehaviour {
 		}
 	}
 	
-	/*void OnTriggerExit (Collider other)
+	void OnTriggerExit (Collider other)
 	{
 		// If the player leaves the trigger zone...
 		if (other.gameObject.tag == "Player") 
 		{
-			playerInSight = false;
+			playerInSight=false;
+			playerInSound=false;
 		}
-	}*/
+	}
 
 }

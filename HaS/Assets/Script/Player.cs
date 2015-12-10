@@ -20,6 +20,7 @@ public class Player : MonoBehaviour {
 	public bool run_flag = false;
 	public bool runSw= false;
 	public bool foodSw = false;
+	public bool downSw = false;
 	public bool inventory_flag=false;
 	public bool map_flag = false;
 	public static bool sleep_flag = false;
@@ -33,13 +34,18 @@ public class Player : MonoBehaviour {
 	Vector3 ray_position;
 	Vector3 ray_direction_R;
 	public int pooptime=0;
-	public int sight=0;
+	public int sight=50;
 	private int sprCount=0;
 	
 	RaycastHit hit_0;
 	
 	static bool save;
-	
+
+	void Start()
+	{
+		Time.captureFramerate = 60;
+	}
+
 	void Save(){
 		SaveLoad.info [0] = Variable.timer+"";
 		SaveLoad.info [1] = this.transform.position.x + "";
@@ -73,23 +79,29 @@ public class Player : MonoBehaviour {
 	
 	
 	void Update () {
+		if (Variable.state == 0)
+			return;
 		if (save==true) {
 			Load();
 			save=false;
 		}
-		if(Input.GetKey(KeyCode.Escape)){
+		/*if(Input.GetKey(KeyCode.Escape)){
 			SaveLoad.scene = Application.loadedLevel;
 			save=true;
 			Save ();
 			Application.LoadLevel("save");
-		}
+		}*/
 		v = 2; //속도 상수
 		Variable.timer++;
-		if (Variable.timer % 1200 == 0) { //20초마다 1씩 증가 
-			Variable.sleep_desire++;
+		if (Variable.timer >= 43200)
+			Variable.timer = 0;
+		if (Variable.timer % 600 == 0) { //10초마다 1씩 증가 
 			if(sleep_flag)
 			{
-				Variable.sleep_desire-=6;
+				Variable.sleep_desire-=5;
+			}
+			else{
+				Variable.sleep_desire+=2;
 			}
 			Variable.appetite++;
 			Variable.excretion++;
@@ -97,10 +109,10 @@ public class Player : MonoBehaviour {
 			desireSlider[1].value = Variable.excretion;
 			desireSlider[2].value = Variable.sleep_desire;
 		}
-		if (Variable.timer > 10000) {//하루가 증가 했다.
+		/*if (Variable.timer > 10000) {//하루가 증가 했다.
 			Variable.timer=0;
 			day++;
-		}
+		}*/
 		//////수면욕///////////
 		if (Variable.sleep_desire > 100) {
 			Variable.sleep_desire=100;
@@ -111,10 +123,11 @@ public class Player : MonoBehaviour {
 				if(Random.Range(0,9)==0)
 				{
 					sleep_flag=true;
+					downSw = true;
 				}
 			}
 		}
-		if (Variable.timer >= 0 && Variable.timer < 3000) {
+		/*if (Variable.timer >= 0 && Variable.timer < 3000) {
 			sight=50;
 		}
 		if (Variable.timer >= 3000 && Variable.timer < 6000) {
@@ -125,10 +138,10 @@ public class Player : MonoBehaviour {
 		}
 		if (Variable.timer >= 9000 && Variable.timer < 12000) {
 			sight=40;
-		}
-		if ((Variable.timer % 3000) == 0) {
+		}*/
+		/*if ((Variable.timer % 3000) == 0) {
 			mainlight.change_range (sight);
-		}
+		}*/
 		///////식욕////////////
 		if (Variable.appetite >= 80) {//식욕이 80넘으면 이속 감소
 			v = 4 / 5;
@@ -136,13 +149,13 @@ public class Player : MonoBehaviour {
 			v = 1;
 		}
 		if (sleep_flag) {
-			sleep ();
+			v=0;
 		}
 		////////배설욕////
 		
 		if (Input.GetKeyDown ("left shift")) {
 			
-			if (Variable.timer % 1200 == 0) { //20초마다 1씩 증가 
+			if (Variable.timer % 600 == 0) { //10초마다 1씩 증가 
 				Variable.sleep_desire++;
 				Variable.appetite++;
 			}
@@ -175,15 +188,18 @@ public class Player : MonoBehaviour {
 				_light.GetComponent<SphereCollider>().radius*=2;
 				print ("깨기");
 				sleep_flag=false;
+				downSw=false;
 				spr.sprite=downSpr[sprCount/10%5];
 			}
 			else
 			{
+				Debug.Log(sight);
 				AudioListener.volume = 2F;
 				mainlight.change_range (sight/2);
 				_light.GetComponent<SphereCollider>().radius/=2;
 				print ("잠자기");
 				sleep_flag=true;
+				downSw=true;
 				spr.sprite=sleepSpr;
 			}
 		}
@@ -209,9 +225,10 @@ public class Player : MonoBehaviour {
 		if (Input.GetKeyDown ("x")) {//숨기
 			if(hideSw ==false)
 			{
-				if (Physics.Raycast (ray_position, ray_direction_R, out hit_0, 3f)) {
+				if (Physics.Raycast (ray_position, ray_direction_R, out hit_0, 4f)) {
 					if (hit_0.collider.tag == "Hide") {
 						print ("숨기");
+						_audio.Stop ();
 						hideSw = true;
 						player.SetActive(false);
 						//this.transform.localScale=new Vector3(0.0f,0.0f,0.0f);
@@ -244,7 +261,7 @@ public class Player : MonoBehaviour {
 			}
 			
 		}
-		if (Input.GetKeyDown ("m")) {
+		if (Input.GetKeyDown ("m") && Variable.mapSw==true) {
 			_audio.Stop();
 			mapmap.showmap ();
 			if (map_flag == false) {
@@ -335,10 +352,10 @@ public class Player : MonoBehaviour {
 		desireSlider[1].value = Variable.excretion/100f;
 		desireSlider[2].value = Variable.sleep_desire/100f;
 	}
-	void sleep()
+/*	void sleep()
 	{
 		v = 0;
 		Variable.timer++;
-	}
+	}*/
 	
 }

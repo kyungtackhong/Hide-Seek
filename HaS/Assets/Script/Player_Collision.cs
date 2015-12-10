@@ -37,7 +37,6 @@ public class Player_Collision : MonoBehaviour {
 
 	void OnTriggerStay(Collider col)
 	{
-		Debug.Log (col.gameObject.tag);
 		if (col.gameObject.tag=="food" && com.foodSw == true)
 		{
 			Destroy (col.gameObject);
@@ -45,20 +44,15 @@ public class Player_Collision : MonoBehaviour {
 			if(Variable.appetite<0)
 				Variable.appetite=0;
 		}
-		if (col.gameObject.tag=="knife" && com.foodSw == true)
+		if (col.gameObject.layer==9 && com.foodSw == true)
 		{
 			Destroy (col.gameObject);
-			inventory.addItem ("knife");
-		}
-		if (col.gameObject.tag=="hammer" && com.foodSw == true)
-		{
-			Destroy (col.gameObject);
-			inventory.addItem ("망치");
-		}
-		if (col.gameObject.tag=="watch" && com.foodSw == true)
-		{
-			Destroy (col.gameObject);
-			inventory.addItem ("시계");
+			inventory.addItem (col.gameObject.name);
+			if(col.gameObject.name == "ring")
+			{
+				Variable.state=0;
+				Variable.questSw=true;
+			}
 		}
 	}
 }

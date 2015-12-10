@@ -1,12 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Player_Collision.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\inventory.cs">
     <Files>
-      <File FileName="Assets\Script\Player.cs" Line="207" Column="7" />
-      <File FileName="Assets\Script\mapmap.cs" Line="109" Column="26" />
+      <File FileName="Assets\Script\inventory.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Player.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\TalkManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Variable.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\GetValue.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Player_Collision.cs" Line="1" Column="1" />
       <File FileName="Assets\Script\Enemy\Enemy_Trace.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Enemy\Hikikomori_Move.cs" Line="55" Column="27" />
-      <File FileName="Assets\Script\Player_Collision.cs" Line="40" Column="3" />
+      <File FileName="Assets\Script\Player_Warp.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\ButtonManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Enemy\Guard_Move.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Enemy\Hikikomori_Move.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -18,11 +18,11 @@ public class GetValue : MonoBehaviour {
 	}
 
 	void getName(){
-		nameText = nameField.text;
+		Variable.name = nameField.text;
 
 	}
 	void setName(){
-		textField.text = nameText;
+		textField.text = Variable.name;
 	}
 }
 

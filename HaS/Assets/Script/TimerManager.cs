@@ -4,8 +4,11 @@ using UnityEngine.UI;
 
 public class TimerManager : MonoBehaviour {
 
-
-	public Image timeTable;
+	void Update()
+	{
+		this.GetComponent<Text> ().text = (Variable.timer / 1800).ToString ("N0");
+	}
+	/*public Image timeTable;
 	public Text hourText;
 	public Text minText;
 
@@ -50,5 +53,5 @@ public class TimerManager : MonoBehaviour {
 
 	void setHavaWatch(bool b){
 		haveWatch = b;
-	}
+	}*/
 }

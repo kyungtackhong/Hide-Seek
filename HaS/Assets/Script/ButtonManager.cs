@@ -11,6 +11,6 @@ public class ButtonManager : MonoBehaviour {
 		Application.Quit ();
 	}
 	public void OnStartGoButtonClicked(){
-		Application.LoadLevel ("Hall1Scene");
+		Application.LoadLevel ("Floor1Scene");
 	}
 }

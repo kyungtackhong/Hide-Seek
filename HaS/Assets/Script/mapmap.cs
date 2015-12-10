@@ -108,8 +108,6 @@ public class mapmap : MonoBehaviour {
 		map2.Apply ();
 		Camera.main.orthographicSize = 30;
 		menu.SetActive(true);
-		Debug.Log (vec.x);
-		Debug.Log (vec.z);
 		
 		//Player.playerposition +=vec;
 		//Camera.main.transform.position +=vec;
