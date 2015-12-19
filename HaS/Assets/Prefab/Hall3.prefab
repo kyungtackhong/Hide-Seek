@@ -2201,17 +2201,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56648756b38b76249be5641ef0ac8a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thing: {fileID: 0}
+  _retryBtn: {fileID: 0}
   _camera: {fileID: 178294}
   _audio: {fileID: 8246494}
   _light: {fileID: 148144}
   poop: {fileID: 103630, guid: f735b467336bf0f409aeb9a718ecc811, type: 2}
   player: {fileID: 122386}
+  playerCol: {fileID: 0}
   spr: {fileID: 21270302}
   hideSw: 0
   desireSlider:
   - {fileID: 11413726}
   - {fileID: 11454292}
   - {fileID: 11495170}
+  fill:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   upSpr:
   - {fileID: 21300000, guid: 8ba9954139de5934abe76a6f2f03bac8, type: 3}
   - {fileID: 21300000, guid: 714b5922ef79d9747b128929c52bcfab, type: 3}
@@ -2230,21 +2237,48 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9c6a0a903a021f143864b258e64e54d5, type: 3}
   - {fileID: 21300000, guid: c4e1587d40ed1fd499a8be0b1cb6bd2e, type: 3}
   - {fileID: 21300000, guid: af3833afe1df0614289ddfdabb1caca4, type: 3}
+  swingUpSpr:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  swingDownSpr:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  swingSideSpr:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   sleepSpr: {fileID: 21300000, guid: 53450f299564d5e46a0ed95c13997d2f, type: 3}
   velocity: 10
   run_flag: 0
   runSw: 0
   foodSw: 0
-  inventory_flag: 0
+  downSw: 0
+  sleepSw: 0
+  sleep_flag1: 0
+  sleep_flag2: 0
+  metrix_flag: 0
+  poop_flag: 0
+  poop_all: 0
   map_flag: 0
+  poopSw: 0
+  itemSw: 0
+  sleep_flag: 0
   excret_flag: 0
   day: 0
   v: 2
   x: 0
   z: 0
   script: {fileID: 0}
+  direction: {x: 0, y: 0, z: 0}
+  vec: {x: 0, y: 0, z: 0}
   pooptime: 0
   sight: 0
+  waitasecond: 0
+  thingmove: 0
+  hide_flag: 0
+  item_flag: 0
 --- !u!114 &11443530
 MonoBehaviour:
   m_ObjectHideFlags: 1

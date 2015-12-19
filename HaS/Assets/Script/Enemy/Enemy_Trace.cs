@@ -6,6 +6,10 @@ public class Enemy_Trace : MonoBehaviour {
 	public float fieldOfViewAngle;
 	public bool playerInSight = false;
 	public bool playerInSound = false;
+	public bool downSw = false;
+	public bool poopSw = false;
+	public GameObject poop = null;
+	public int downtimer = 0;
 	public Vector3 targetSightPos;
 	public Vector3 targetSoundPos;
 	public GameObject enemy;
@@ -13,7 +17,12 @@ public class Enemy_Trace : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if(Vector3.Distance(player.transform.position,transform.position)<player.GetComponent<Player>()._light.GetComponent<SphereCollider>().radius*4)
+		if (downSw == true) {
+			--downtimer;
+			if (downtimer == 0)
+				downSw = false;
+		}
+		if(Vector3.Distance(player.transform.position,transform.position)<player.GetComponent<Player>()._light.GetComponent<Light>().spotAngle/10*4)
 		{
 			enemy.SetActive(true);
 		}
@@ -34,7 +43,7 @@ public class Enemy_Trace : MonoBehaviour {
 	void OnTriggerStay (Collider other)
 	{
 		// If the player has entered the trigger sphere...
-		if(other.gameObject.tag == "Player" && player.GetComponent<Player>().hideSw==false)
+		if(other.gameObject.tag == "Player" && player.GetComponent<Player>().hide_flag==false)
 		{
 			// By default the player is not in sight.
 
@@ -57,7 +66,8 @@ public class Enemy_Trace : MonoBehaviour {
 						// ... the player is in sight.
 						playerInSight = true;
 						// Set the last global sighting is the players current position.
-						targetSightPos = player.transform.position;
+						if(Vector3.Distance (transform.position,player.transform.position)<50)
+							targetSightPos = player.transform.position;
 						//agent.destination=targetPos;
 						return;
 					}
@@ -71,18 +81,21 @@ public class Enemy_Trace : MonoBehaviour {
 				playerInSight=false;
 			if(player.GetComponent<Player>().runSw==true || player.GetComponent<Player_Collision>().soundSw==true)
 			{
-				targetSoundPos = player.transform.position;
+				if(Vector3.Distance (transform.position,player.transform.position)<50)
+					targetSoundPos = player.transform.position;
 				//agent.destination=targetPos;
 				playerInSound = true;
+				return;
 			}
 			else
 			{
 				playerInSound = false;
 			}
 		}
-		else
+		if(other.gameObject.tag == "poop" && poop==null)
 		{
-
+			poopSw=true;
+			poop=other.gameObject;
 		}
 	}
 	

@@ -51,8 +51,11 @@
      <Compile Include="Assets\Script\Enemy\Enemy_Trace.cs" />
      <Compile Include="Assets\Script\Enemy\Guard_Move.cs" />
      <Compile Include="Assets\Script\Enemy\Hikikomori_Move.cs" />
+     <Compile Include="Assets\Script\Enemy\Spy_Move.cs" />
+     <Compile Include="Assets\Script\Enemy\Tout_Move.cs" />
      <Compile Include="Assets\Script\GetValue.cs" />
      <Compile Include="Assets\Script\Player.cs" />
+     <Compile Include="Assets\Script\PlayerCol_Collision.cs" />
      <Compile Include="Assets\Script\Player_Collision.cs" />
      <Compile Include="Assets\Script\Player_Warp.cs" />
      <Compile Include="Assets\Script\SaveLoad.cs" />
@@ -66,6 +69,8 @@
      <Compile Include="Assets\Script\inventory.cs" />
      <Compile Include="Assets\Script\mainlight.cs" />
      <Compile Include="Assets\Script\mapmap.cs" />
+     <Compile Include="Assets\Script\object_inventory.cs" />
+     <Compile Include="Assets\Script\poop.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/unity5.1.2/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

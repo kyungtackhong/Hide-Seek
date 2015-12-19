@@ -19,7 +19,7 @@ public class Hikikomori_Move : MonoBehaviour {
 	private int step = 4; // 1 - 소변보러가기, 2 - 소변보기, 3 - 돌아가기, 4 - 컴퓨터,
 						  // 5 - 소리가 들림, 6 - 둘러보기, 7 - 뭔가 보임, 8 - 수색하기
 						  // 9 - 쫓아냄, 10 - 냉장고가기, 11 - 음식꺼내기, 12 - 침대가기
-						  // 13 - 자기
+						  // 13 - 자기, 14 - 똥으로 가기
 	private int detectStep = 0;
 	private int count = 0;
 	private int sightCount = 0;
@@ -27,12 +27,11 @@ public class Hikikomori_Move : MonoBehaviour {
 	private AudioSource _audio;
 	public AudioClip _walk;
 	public AudioClip _toilet;
+	public AudioClip _snore;
 	public SpriteRenderer toilet;
 	public Sprite toiletOpen;
 	public Sprite toiletClose;
 	private Vector3 targetPos;
-	private bool[] sw = new bool[3]{true,true,true};
-
 
 	// Use this for initialization
 	void Start () {
@@ -44,28 +43,27 @@ public class Hikikomori_Move : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Variable.state == 0)
+		if (Variable.state != 1 || trace.downSw==true)
 			return;
-		if (Variable.timer % 45 <= 20 && sw [0]) { //45
+		if (Variable.timer % 30==0) { //90
 			++excretion;
-			sw [0] = false;
-		} else
-			sw [0] = true;
-		if (Variable.timer % 180 <= 20 && sw [1]) { //180
+		}
+		if (Variable.timer % 60 ==0) { //180
 			++appetite;
-			sw [1] = false;
-		} else
-			sw [1] = true;
-		if (Variable.timer % 540 <= 20 && sw [2]) { //540
+		}
+		if (Variable.timer % 180==0) { //540
 			++sleep_desire;
-			sw [2] = false;
-		} else
-			sw [2] = true;
+		}
 		Vector3 pos = transform.position;
 		pos.y = 1;
 		transform.position = pos;
 		if (!trace.playerInSight && !trace.playerInSound) {
-			if(step == 1 || step == 3 || step ==5 || step == 7 || step == 8 || step == 10 || step == 12)
+			if(trace.poopSw==true && step!=7 && step!=5 && step !=9 && step !=13)
+			{
+				_agent.destination=trace.poop.transform.position;
+				step = 14;
+			}
+			if(step == 1 || step == 3 || step ==5 || step == 7 || step == 8 || step == 10 || step == 12 || step == 14)
 			{
 				if(!_audio.isPlaying)
 				{
@@ -88,14 +86,14 @@ public class Hikikomori_Move : MonoBehaviour {
 				{
 					col.radius = 2;
 					step = 10;
-					targetPos = new Vector3(25+90,1,25+180);
+					targetPos = new Vector3(25+90,1,15+180);
 					_agent.destination = targetPos;
 				}
 				else if(sleep_desire>=60)
 				{
 					col.radius=2;
 					step = 12;
-					targetPos = new Vector3(-25+90,1,35+180);
+					targetPos = new Vector3(-25+90,1,25+180);
 					_agent.destination = targetPos;
 				}
 			}
@@ -120,17 +118,17 @@ public class Hikikomori_Move : MonoBehaviour {
 					if(appetite>=60)
 					{
 						step = 10;
-						targetPos = new Vector3(25+90,1,25+180);
+						targetPos = new Vector3(25+90,1,15+180);
 					}
 					else if(sleep_desire>=60)
 					{
 						step = 12;
-						targetPos = new Vector3(-25+90,1,35+180);
+						targetPos = new Vector3(-25+90,1,25+180);
 					}
 					else
 					{
 						step = 3;
-						targetPos=new Vector3(-5+90,1,25+180);
+						targetPos=new Vector3(-5+90,1,15+180);
 					}
 					_agent.destination = targetPos;
 				}
@@ -154,8 +152,9 @@ public class Hikikomori_Move : MonoBehaviour {
 				transform.Rotate (0, 1f, 0);
 				if(count==180)
 				{
+					col.radius=2;
 					step = 3;
-					targetPos=new Vector3(-5+90,1,25+180);
+					targetPos=new Vector3(-5+90,1,15+180);
 					_agent.destination = targetPos;
 					count = 0;
 				}
@@ -168,7 +167,6 @@ public class Hikikomori_Move : MonoBehaviour {
 			}
 			else if(step==8) // 수색하기
 			{
-				Debug.Log ("!!");
 				Detect();
 			}
 			else if(step==9) // 쫓아내기
@@ -177,7 +175,7 @@ public class Hikikomori_Move : MonoBehaviour {
 				if(count==10)
 				{
 					_agent.enabled=false;
-					transform.localPosition = new Vector3(-5,1,25);
+					transform.localPosition = new Vector3(-5,1,15);
 					_agent.enabled=true;
 					step=4;
 				}
@@ -208,12 +206,12 @@ public class Hikikomori_Move : MonoBehaviour {
 					else if(sleep_desire>=60)
 					{
 						step = 12;
-						targetPos = new Vector3(-25+90,1,35+180);
+						targetPos = new Vector3(-25+90,1,25+180);
 					}
 					else
 					{
 						step = 3;
-						targetPos=new Vector3(-5+90,1,25+180);
+						targetPos=new Vector3(-5+90,1,15+180);
 					}
 					_agent.destination = targetPos;
 				}
@@ -221,20 +219,24 @@ public class Hikikomori_Move : MonoBehaviour {
 			else if(step == 12 && Vector3.Distance(transform.position,targetPos)<0.1f) // 잠자러가기
 			{
 				_agent.enabled=false;
-				this.transform.position = new Vector3(-35+90,1,30+180);
+				this.transform.position = new Vector3(-35+90,1,20+180);
 				step = 13;
 				col.radius=0;
+				_audio.clip = _snore;
+				_audio.loop = true;
 				_audio.Stop ();
+				_audio.Play ();
 			}
 			else if(step==13)
 			{
 				++count;
 				if(count==14400)
 				{
-					this.transform.position = new Vector3(-25+90,1,35+180);
+					this.transform.position = new Vector3(-25+90,1,25+180);
 					_agent.enabled=true;
 					_audio.clip=_walk;
 					_audio.loop=true;
+					_audio.Stop ();
 					_audio.Play();
 					appetite=0;
 					count =0;
@@ -245,25 +247,32 @@ public class Hikikomori_Move : MonoBehaviour {
 						targetPos = new Vector3(-15+90,1,-25+180);
 						_agent.destination = targetPos;
 					}
-					else if(excretion>=60)
+					else if(appetite>=60)
 					{
 						col.radius = 2;
-						step = 1;
-						targetPos = new Vector3(-15+90,1,-25+180);
-						_agent.destination = targetPos;
+						step = 10;
+						targetPos = new Vector3(25+90,1,15+180);
 					}
 					else
 					{
 						step = 3;
-						targetPos=new Vector3(-5+90,1,25+180);
+						targetPos=new Vector3(-5+90,1,15+180);
 					}
 					_agent.destination = targetPos;
 				}
+			}
+			else if(step==14 && Vector3.Distance(transform.position,trace.poop.transform.position)<5)
+			{
+				Destroy (trace.poop.gameObject);
+				step = 8;
+				detectStep=0;
+				trace.poopSw=false;
 			}
 		} 
 		else if(step!=9){
 			if(trace.playerInSight==true)
 			{
+				col.radius=4;
 				step = 7;
 				_agent.destination=trace.targetSightPos;
 				_audio.clip=_walk;
@@ -287,6 +296,7 @@ public class Hikikomori_Move : MonoBehaviour {
 			}
 			else if(trace.playerInSound==true)
 			{
+				col.radius=4;
 				step=5;
 				_agent.destination=trace.targetSoundPos;
 				_audio.clip=_walk;
@@ -336,12 +346,12 @@ public class Hikikomori_Move : MonoBehaviour {
 		}
 		if(detectStep == 0 && Vector3.Distance(transform.position ,targetPos)<0.1f)
 		{
-			targetPos=new Vector3(-25+90,1,35+180);
+			targetPos=new Vector3(-25+90,1,25+180);
 			detectStep = 1;
 		}
 		else if(detectStep == 1 && Vector3.Distance(transform.position ,targetPos)<0.1f)
 		{
-			targetPos = new Vector3(-5+90,1,25+180);
+			targetPos = new Vector3(-5+90,1,15+180);
 			detectStep = 2;
 		}
 		else if(detectStep == 2 && Vector3.Distance(transform.position ,targetPos)<0.1f)
@@ -351,7 +361,7 @@ public class Hikikomori_Move : MonoBehaviour {
 		}
 		else if(detectStep == 3 && Vector3.Distance(transform.position ,targetPos)<0.1f)
 		{
-			targetPos = new Vector3(5+90,1,25+180);
+			targetPos = new Vector3(5+90,1,15+180);
 			detectStep=4;
 		}
 		else if(detectStep == 4 && Vector3.Distance(transform.position ,targetPos)<0.1f)
@@ -361,17 +371,23 @@ public class Hikikomori_Move : MonoBehaviour {
 		}
 		else if(detectStep == 5 && Vector3.Distance(transform.position ,targetPos)<0.1f)
 		{
-			targetPos = new Vector3(35+90,1,-25+180);
+			targetPos = new Vector3(-35+90,1,35+180);
 			detectStep=6;
 		}
 		else if(detectStep == 6 && Vector3.Distance(transform.position ,targetPos)<0.1f)
 		{
-			targetPos = new Vector3(-5+90,1,-35+180);
+			targetPos = new Vector3(35+90,1,-25+180);
 			detectStep=7;
 		}
 		else if(detectStep == 7 && Vector3.Distance(transform.position ,targetPos)<0.1f)
 		{
-			targetPos = new Vector3(-5+90,1,25+180);
+			targetPos = new Vector3(-5+90,1,-35+180);
+			detectStep=8;
+		}
+		else if(detectStep == 8 && Vector3.Distance(transform.position ,targetPos)<0.1f)
+		{
+			col.radius=2;
+			targetPos = new Vector3(-5+90,1,15+180);
 			detectStep=0;
 			step=3;
 		}
@@ -380,7 +396,7 @@ public class Hikikomori_Move : MonoBehaviour {
 	}
 	void OnTriggerStay(Collider coll)
 	{
-		if(coll.gameObject.tag=="Player" && Vector3.Distance(transform.position,coll.transform.position)<5)
+		if(coll.gameObject.tag=="Player" && Vector3.Distance(transform.position,coll.transform.position)<3)
 		{
 			GameObject.Find ("/Hall1/Doors/door1/Lock1").SetActive(true);
 			step = 9;
@@ -388,7 +404,7 @@ public class Hikikomori_Move : MonoBehaviour {
 			_agent.Stop();
 			_agent.enabled=false;
 			transform.position = new Vector3(-25+90,1,-150+180);
-			Variable.prevScene = Variable.scene;
+			Variable.prevScene = 1;
 			Variable.scene = 0;
 			transform.eulerAngles=new Vector3(0,0,0);
 			_agent.enabled=true;
@@ -396,6 +412,14 @@ public class Hikikomori_Move : MonoBehaviour {
 			Player com = coll.GetComponent<Player>();
 			com.hideSw=false;
 			com.player.SetActive(true);
+			Vector3 pos = coll.transform.position;
+			pos.y=50;
+			com._light.transform.position=pos;
+			com._camera.transform.position=pos;
+			Variable.hikiSw=true;
+			Variable.state = 0;
+			mainlight.change_range(com.sight);
+			com.hide_flag=false;
 		}
 	}
 }

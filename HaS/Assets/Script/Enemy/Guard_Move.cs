@@ -9,25 +9,28 @@ public class Guard_Move : MonoBehaviour {
 	public Sprite[] upSpr = new Sprite[5];
 	public Sprite[] downSpr = new Sprite[5];
 	public Sprite[] sideSpr = new Sprite[5];
-//	private SphereCollider col;  
+	private SphereCollider col;  
 	private int sprCount = 0;
 	private int type=0;
 	private int count=0;
 	private int step=0; // 0 - 티비보기, 1 - 자러가기, 2 - 자는중, 3- 기상, 냉장고로, 4 - 음식 꺼내기, 5 - 티비보러
 						// 6 - 순찰 중, 7 - 쓰레기 정리 , 8 - 순찰 중 소리가 난곳으로, 10 - 집에서 소리 들림, 11 - 집에서 뭔가 보임
-						// 12 - 수색
+						// 12 - 수색, 13 - 순찰 중 쓰러진 플레이어 발견, 14 - 아이를 배웅, 15 - 똥으로 가기
 	private int detectStep = 0;
 	private int patrolStep=0;
 	private int trashStep=0;
 	private Vector3 targetPos;
 	private NavMeshAgent _agent;
 	private AudioSource _audio;
+	public AudioClip _walk;
+	public AudioClip _snore;
 	private bool isWalk = false;
+	private bool isFirst = true;
 
 	// Use this for initialization
 	void Start () {
 		trace = GetComponent<Enemy_Trace> ();
-//		col = GetComponent<SphereCollider> ();
+		col = GetComponent<SphereCollider> ();
 		_agent = GetComponent<NavMeshAgent> ();
 		_audio = GetComponent<AudioSource> ();
 	}
@@ -38,24 +41,32 @@ public class Guard_Move : MonoBehaviour {
 	//오후 6시 출근 쓰레기 정리
 	//오후 10시 순찰
 	void Update () {
-		if (Variable.state == 0)
+		if (Variable.state != 1 || trace.downSw==true)
 			return;
 		Vector3 pos = transform.position;
 		pos.y = 1;
 		transform.position = pos;
-		if (trace.playerInSound == true && (step == 6 || step == 8)) { // 순찰 중 소리가 들림
+		if (trace.playerInSound == true && (step == 6 || step == 8 || step == 13)) { // 순찰 중 소리가 들림
+			col.radius = 4;
 			step = 8;
 			_agent.destination = trace.targetSoundPos;
-		} else if (trace.playerInSight == true && step == 6 && trace.player.GetComponent<Player> ().downSw == true) { // 순찰 중 쓰러진 꼬맹이 발견
-			Debug.Log ("쓰러졌다!");
-		} else if (trace.playerInSight == true && patrolStep == 0 && trashStep == 0 && step!=2) { // 집에서 플레이어 발견
-			step = 11;
-			_agent.destination=trace.targetSightPos;
+		} else if (trace.playerInSight == true && (step == 6 || step == 8 || step == 13) && trace.player.GetComponent<Player> ().downSw == true) { // 순찰 중 쓰러진 꼬맹이 발견
+			step = 13;
+			_agent.destination = trace.targetSightPos;
 			isWalk = true;
-		}else if (trace.playerInSound == true && patrolStep == 0 && trashStep == 0 && step!=2 && step!=11) { // 집에서 소리 들림
+		} else if (trace.playerInSight == true && patrolStep == 0 && trashStep == 0 && step != 2 && step != 14) { // 집에서 플레이어 발견
+			col.radius = 4;
+			step = 11;
+			_agent.destination = trace.targetSightPos;
+			isWalk = true;
+		} else if (trace.playerInSound == true && patrolStep == 0 && trashStep == 0 && step != 2 && step != 11 && step != 14) { // 집에서 소리 들림
+			col.radius = 4;
 			step = 10;
 			_agent.destination = trace.targetSoundPos;
 			isWalk = true;
+		} else if (trace.poopSw == true && step != 2 && step != 10 && step != 11) {
+			_agent.destination=trace.poop.transform.position;
+			step = 15;
 		}
 		else if(Variable.timer>=60*30*22 && step==0) // 오후 10시 순찰
 		{
@@ -82,14 +93,21 @@ public class Guard_Move : MonoBehaviour {
 			targetPos = new Vector3(25+90,1,-25-150);
 			_agent.destination=targetPos;
 			isWalk = true;
+			_audio.clip = _walk;
+			_audio.loop = true;
+			_audio.Stop ();
+			_audio.Play ();
 		}
 		if (step == 1 && Vector3.Distance (transform.position, targetPos) < 0.1f) { // 1 - 자러가기
-			isWalk = false;
 			_agent.Stop ();
 			_agent.enabled = false;
 			transform.localPosition = new Vector3 (-20, 1, 15);
 			transform.eulerAngles = new Vector3 (0, 90, 0);
 			step = 2;
+			_audio.clip = _snore;
+			_audio.loop = true;
+			_audio.Stop ();
+			_audio.Play ();
 		} else if (step == 3 && Vector3.Distance (transform.position, targetPos) < 0.1f) { // 3 - 기상 , 냉장고로
 			step = 4;
 			count = 0;
@@ -112,17 +130,37 @@ public class Guard_Move : MonoBehaviour {
 		} else if (step == 8 && Vector3.Distance (transform.position, trace.targetSoundPos) < 1) { // 순찰 중 소리가 들림
 			step = 6;
 			_agent.destination = targetPos;
+			col.radius=2;
 		} else if (step == 10 && Vector3.Distance (transform.position, trace.targetSoundPos) < 1) { // 집 안에서 소리 들림
 			targetPos = new Vector3 (5 + 90, 1, 15 - 150);
 			_agent.destination = targetPos;
 			isWalk = true;
 			step = 5;
+			col.radius=2;
 		} else if (step == 11 & Vector3.Distance (transform.position, trace.targetSightPos) < 3) { // 집 안에서 뭔가 보임
 			step = 12;
-			detectStep=0;
-		} else if(step==12)
+			detectStep = 0;
+		} else if (step == 12) { // 수색
+			Detect ();
+		} else if (step == 13 && Vector3.Distance (transform.position, trace.targetSightPos) < 1) { // 순찰 중 플레이어 쓰러진 거 발견
+			step = 6;
+			_agent.destination = targetPos;
+		} else if (step == 14) {
+			++count;
+			if(count==10)
+			{
+				_agent.Stop ();
+				_agent.enabled=false;
+				transform.localPosition = new Vector3 (5, 1, 15);
+				_agent.enabled=true;
+				step=0;
+			}
+		} else if(step==15 && Vector3.Distance(transform.position,trace.poop.transform.position)<5)
 		{
-			Detect();
+			Destroy (trace.poop.gameObject);
+			step = 12;
+			detectStep=0;
+			trace.poopSw=false;
 		}
 		Vector3 ang = enemy.transform.eulerAngles;
 		ang.y = 0;
@@ -145,7 +183,8 @@ public class Guard_Move : MonoBehaviour {
 			enemy.transform.localScale=new Vector3(1.5f,1.5f,3);
 		}
 		if (isWalk == true) {
-			++sprCount;
+			if(_audio.clip == _walk)
+				++sprCount;
 			if (_audio.isPlaying == false)
 				_audio.Play ();
 		} 
@@ -375,6 +414,73 @@ public class Guard_Move : MonoBehaviour {
 			step=6;
 			detectStep=0;
 			patrolStep=0;
+			col.radius=2;
+		}
+	}
+	void OnTriggerStay(Collider coll)
+	{
+		if(coll.gameObject.tag=="Player" && Vector3.Distance(transform.position,coll.transform.position)<3)
+		{
+			Player com = coll.GetComponent<Player>();
+			if(step==13 && com.downSw == true)
+			{
+				step = 14;
+				count = 0;
+				_agent.Stop();
+				_agent.enabled=false;
+				transform.position = new Vector3(-25+90,1,150-150);
+				Variable.prevScene = 2;
+				Variable.scene = 0;
+				transform.eulerAngles=new Vector3(0,0,0);
+				_agent.enabled=true;
+				coll.transform.position = new Vector3(65,1,10);
+				com.hideSw=false;
+				com.player.SetActive(true);
+				Vector3 pos = coll.transform.position;
+				pos.y=50;
+				com._light.transform.position=pos;
+				com._camera.transform.position=pos;
+				Variable.appetite=0;
+				Variable.sleep_desire=0;
+				Variable.excretion=0;
+				Variable.state = 0;
+				if(isFirst==true)
+				{
+					Variable.guardSw=1;
+					isFirst=false;
+				}
+				else {
+					Variable.guardSw=3;
+				}
+			}
+			else if(step!=6 && step!=7 && step!=8 && step!= 13)
+			{
+				step = 14;
+				count = 0;
+				_agent.Stop();
+				_agent.enabled=false;
+				transform.position = new Vector3(-25+90,1,150-150);
+				Variable.prevScene = 2;
+				Variable.scene = 0;
+				transform.eulerAngles=new Vector3(0,0,0);
+				_agent.enabled=true;
+				coll.transform.position = new Vector3(65,1,10);
+				com.hideSw=false;
+				com.player.SetActive(true);
+				Vector3 pos = coll.transform.position;
+				pos.y=50;
+				com._light.transform.position=pos;
+				com._camera.transform.position=pos;
+				Variable.state = 0;
+				if(isFirst==true)
+				{
+					Variable.guardSw=2;
+					isFirst=false;
+				}
+				else {
+					Variable.guardSw=3;
+				}
+			}
 		}
 	}
 }

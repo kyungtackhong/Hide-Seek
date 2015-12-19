@@ -20,6 +20,7 @@ public class mapmap : MonoBehaviour {
 	private static Vector3 vec;
 	private int width;
 	private int height;
+
 	// Use this for initialization
 	void Start () {
 		menu = GameObject.FindWithTag("UI");
@@ -56,8 +57,28 @@ public class mapmap : MonoBehaviour {
 	{
 		mapWindowRect= new Rect(Screen.width/10,Screen.height/10, Screen.width*8/10, Screen.height*8/10);
 		if (mapWindowToggle) {
-			mapWindowRect =GUI.Window(0,mapWindowRect,mapWindowMethod,"map");
-			
+			switch(Variable.scene)
+			{
+			case -1:
+				name = "암상인의 방";
+				break;
+			case 0:
+				name = "복도 1층";
+				break;
+			case 1:
+				name = "101호";
+				break;
+			case 6:
+				name = "106호";
+				break;
+			case 10:
+				name = "복도 2층";
+				break;
+			case 20:
+				name="복도 3층";
+				break;
+			}
+			mapWindowRect =GUI.Window(0,mapWindowRect,mapWindowMethod,name);
 			
 		}
 	}

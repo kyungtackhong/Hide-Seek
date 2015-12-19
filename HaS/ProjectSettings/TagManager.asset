@@ -9,18 +9,23 @@ TagManager:
   - mainlight
   - food
   - Object
-  - House 1-1
+  - 106
   - Hall1
   - Hall2
   - Hall3
-  - Hall4
-  - House 1-2
+  - 401
+  - 101
   - Hide
   - UI
-  - hammer
-  - knife
-  - watch
   - BlackMarket
+  - item
+  - Hall4
+  - Broken-Wall
+  - 102
+  - 105
+  - Seek
+  - enemy
+  - poop
   layers:
   - Default
   - TransparentFX
